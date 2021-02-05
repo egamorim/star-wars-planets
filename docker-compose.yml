@@ -1,0 +1,22 @@
+version: '3.1'
+
+services:
+  mongodb:
+    image: mongo
+    container_name: star-wars-mongo
+    restart: always
+    ports:
+      - 27017:27017
+
+  star-wars:
+    image: star-wars:latest
+    ports:
+      - "8000:8000"
+    environment:
+        MONGO_DB_HOST: 'star-wars-mongo'
+    deploy:
+      resources:
+        limits:
+          memory: 350m
+        reservations:
+          memory: 100m
