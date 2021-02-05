@@ -48,19 +48,6 @@ func (r *PlanetRepository) Insert(planet *Planet) (*Planet, error) {
 //GetAll ...
 func (r *PlanetRepository) GetAll(offset int, limit int) ([]Planet, error) {
 
-	/*
-		var result []bson.M
-
-		log.Println(offset)
-		log.Println(limit)
-		pipeline := []bson.M{
-			bson.M{"$group": bson.M{"docs": bson.M{"$push": "$$ROOT"}, "count": bson.M{"$sum": 1}}},
-			bson.M{"$project": bson.M{"_id": 0, "count": 1, "docs": bson.M{"$slice": []interface{}{"$docs", offset, limit}}}},
-		}
-		r.Mongo.C(planetCollection).Pipe(pipeline).All(&result)
-		fmt.Println(result)
-
-	*/
 	var data []Planet
 	r.Mongo.C(planetCollection).Find(bson.M{}).Sort("_id").Limit(limit).Skip(offset).All(&data)
 
